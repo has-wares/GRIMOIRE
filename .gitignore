@@ -1,0 +1,36 @@
+# Python bytecode (τα πιο σημαντικά να λείπουν)
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / Packaging
+bin/
+build/
+develop-eggs/
+dist/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# IDLE & OS specific
+*.pyw
+.DS_Store
+Thumbs.db
+
+# Database (ΠΡΟΣΟΧΗ: Μην ανεβάσεις τις προσωπικές σου σημειώσεις!)
+*.db
+*.sqlite3
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/

@@ -1,0 +1,10 @@
+[project]
+name='grim'
+version='0.1'
+description='not available right now'
+requires-python='>=3.11'
+dependencies=['click>=8.1', 'rich>=13.0']
+[tool.setuptools.packages.find]
+where = ["src"]
+[project.scripts]
+grim='grimcli.main:cli'
