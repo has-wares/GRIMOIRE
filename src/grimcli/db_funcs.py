@@ -85,14 +85,14 @@ def update_byid(conn, num, new_cont):
 
 def listemall(conn):
     cursor = conn.execute("""
-            SELECT id, name, tags, created_at
+            SELECT id, name, tags, created_at, updated_at
             FROM grim ORDER BY created_at
             """)
     return cursor.fetchall()
     
 def listemnew(conn):
     cursor = conn.execute("""
-            SELECT id, name, tags, updated_at
+            SELECT id, name, tags, created_at, updated_at
             FROM grim ORDER BY updated_at DESC
             """)
     return cursor.fetchall()
@@ -101,7 +101,7 @@ def listemnew(conn):
 def list_bytag(conn, tags):
     where_clause = ["LOWER(tags) LIKE ?" for _ in tags]
     query = f"""
-            SELECT id, name, tags, created_at
+            SELECT id, name, tags, created_at, updated_at
             FROM grim WHERE {' OR '.join(where_clause)}
             ORDER BY created_at
             """
@@ -112,7 +112,7 @@ def list_bytag(conn, tags):
 def list_bytag_n(conn, tags):
     where_clause = ["LOWER(tags) LIKE ?" for _ in tags]
     query = f"""
-            SELECT id, name, tags, updated_at
+            SELECT id, name, tags, created_at, updated_at
             FROM grim WHERE {' OR '.join(where_clause)}
             ORDER BY updated_at DESC
             """
@@ -123,7 +123,7 @@ def list_bytag_n(conn, tags):
 def list_exact(conn, tags):
     tags = ','.join(tags) if isinstance(tags, list) else tags
     query = """
-            SELECT id, name, tags, created_at
+            SELECT id, name, tags, created_at, updated_at
             FROM grim WHERE LOWER(tags) = ?
             ORDER BY created_at
             """
@@ -133,7 +133,7 @@ def list_exact(conn, tags):
 def list_exact_new(conn, tags):
     tags = ','.join(tags) if isinstance(tags, list) else tags
     query = """
-            SELECT id, name, tags, created_at
+            SELECT id, name, tags, created_at, updated_at
             FROM grim WHERE LOWER(tags) = ?
             ORDER BY updated_at DESC
             """
@@ -190,7 +190,8 @@ def rename_byid(conn, num, new_name):
 
 def search(conn, query):
     sql = """
-        SELECT b.id, b.name, b.tags, b.updated_at
+        SELECT b.id, b.name, b.tags, b.created_at, b.updated_at,
+        snippet(grim_search, 2, '→', '←', '…', 20) as snippet
         FROM grim b
         JOIN grim_search s ON b.id = s.rowid
         WHERE grim_search MATCH ?

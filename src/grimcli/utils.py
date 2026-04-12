@@ -19,17 +19,43 @@ def display_table(notes, console):
     table.add_column('ID', style='white')
     table.add_column('NAME', style='white', no_wrap=False)
     table.add_column('TAGS', style ='white', no_wrap=False)
-    table.add_column('TIMESTAMP', style='white')
+    table.add_column('CREATED_AT', style='white')
+    table.add_column('UPDATED_AT', style='white')
     #row[0]=id, row[1]=name, row[2]=tags, row[3]=timestamp
     for row in notes:
         num = str(row[0])
         name = row[1]
         tags = row[2] if row[2] else ''
-        date = row[3] if row[3] else 'N/A'
-        date_str = date.split(' ')[0]
-        table.add_row(num, name, tags, date_str)
+        created_at = row[3] if row[3] else 'N/A'
+        created_at = created_at.split(' ')[0] if created_at != 'N/A' else 'N/A'
+        updated_at = row[4] if row[4] else 'N/A'
+        updated_at = updated_at.split(' ')[0] if updated_at != 'N/A' else 'N/A'
+        table.add_row(num, name, tags, created_at, updated_at)
 
     console.print(table)
+
+
+def search_table(notes, console):
+    table = Table()
+    table.add_column('ID', style='white')
+    table.add_column('NAME', style='white', no_wrap=False)
+    table.add_column('TAGS', style ='white', no_wrap=False)
+    table.add_column('CREATED_AT', style='white')
+    table.add_column('UPDATED_AT', style='white')
+    table.add_column('SNIPET', style='white')
+    for row in notes:
+        num = str(row[0])
+        name = row[1]
+        tags = row[2] if row[2] else ''
+        created_at = row[3] if row[3] else 'N/A'
+        created_at = created_at.split(' ')[0] if created_at != 'N/A' else 'N/A'
+        updated_at = row[4] if row[4] else 'N/A'
+        updated_at = updated_at.split(' ')[0] if updated_at != 'N/A' else 'N/A'
+        snipet = row[5] if row[5] else ''
+        table.add_row(num, name, tags, created_at, updated_at, snipet)
+
+    console.print(table)
+
 
 def validate_name(name):
     if not name or not name.strip():

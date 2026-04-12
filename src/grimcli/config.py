@@ -16,7 +16,6 @@ EDITOR_MAP = {
     }
 
 DEFAULT_CONFIG = {
-    'auto_edit': True,
     'editor': 'default',
     'extension': 'md',}
 

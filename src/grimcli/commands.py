@@ -19,7 +19,6 @@ from .dispatch import (GET_DISPATCH, RM_DISPATCH, UPDATE_DISPATCH,
 def make_note(ctx, name, tags):
     conn = ctx.obj['conn']    
     cfg = ctx.obj['config']
-    editor = cfg.get('editor', None)
     
     try:
         name, tags = core.make(name, tags)
@@ -43,8 +42,7 @@ def edit_note(ctx, what):
     conn = ctx.obj['conn']
     cfg = ctx.obj['config']
     ext = cfg.get('extension', '.md')
-    editor = cfg.get('editor', None)
-
+    
     try:
         what, mode = core.whatami(what)
         curr_cont = GET_DISPATCH[mode](conn, what)
@@ -179,7 +177,7 @@ def find(ctx, query):
     try:
         results = db_funcs.search(conn, query)
         core.find_okay(results)
-        utils.display_table(results, console)
+        utils.search_table(results, console)
     except ValueError as e:
         click.secho(f'{e}')
     except Exception as e:
